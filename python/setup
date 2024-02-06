@@ -1,0 +1,12 @@
+install Django
+    pip install Django==2
+    pip install  Django  
+    pip install --user django-admin
+
+
+Create your project
+django-admin.py startproject project1
+
+
+fix djnago not insalled 
+https://stackoverflow.com/questions/46210934/importerror-couldnt-import-django
