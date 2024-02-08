@@ -41,5 +41,7 @@ python manage.py migrate
 git clone --depth=1 https://github.com/Homebrew/brew .brew && export PATH=.brew/bin:$PATH && brew update && echo "export PATH=.brew/bin:$PATH" >> ~/.zshrc\n
  export PATH=$PATH:/Users/atabiti/goinfre/.brew/bin
 
+# https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Admin_site
 
+python3 manage.py createsuperuser
 
