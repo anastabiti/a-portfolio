@@ -19,3 +19,7 @@ https://stackoverflow.com/questions/46210934/importerror-couldnt-import-django
 4 -virtualenv atabiti-env
 3 -source atabiti-env/bin/activate
 4-  django-admin startproject ecommerce 
+
+
+create an app:
+django-admin startapp app
