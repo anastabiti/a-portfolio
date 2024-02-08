@@ -10,3 +10,12 @@ django-admin.py startproject project1
 
 fix djnago not insalled 
 https://stackoverflow.com/questions/46210934/importerror-couldnt-import-django
+
+
+
+0- pip install django
+1 -  pip install virtualenv    
+2 - export PATH=$PATH:/Users/atabiti/Library/Python/3.8/bin
+4 -virtualenv atabiti-env
+3 -source atabiti-env/bin/activate
+4-  django-admin startproject ecommerce 
