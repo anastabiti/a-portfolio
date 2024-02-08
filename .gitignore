@@ -25,3 +25,10 @@ replay_pid*
 
 *.idea/
 *.out
+
+*.pyc
+__pycache__
+db.sqlite3
+/env
+*.env
+.vscode

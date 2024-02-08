@@ -23,3 +23,16 @@ https://stackoverflow.com/questions/46210934/importerror-couldnt-import-django
 
 create an app:
 django-admin startapp app
+
+# setup database
+https://stackpython.medium.com/how-to-start-django-project-with-a-database-postgresql-aaa1d74659d8
+1- install  django-environ 
+    pip install django-environ
+2-
+
+
+
+
+#install brew
+git clone --depth=1 https://github.com/Homebrew/brew .brew && export PATH=.brew/bin:$PATH && brew update && echo "export PATH=.brew/bin:$PATH" >> ~/.zshrc\n
+ export PATH=$PATH:/Users/atabiti/goinfre/.brew/bin
