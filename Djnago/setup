@@ -45,3 +45,7 @@ git clone --depth=1 https://github.com/Homebrew/brew .brew && export PATH=.brew/
 
 python3 manage.py createsuperuser
 
+
+#google i usef https://pylessons.com/django-google-oauth
+pip install django-allauth
+
