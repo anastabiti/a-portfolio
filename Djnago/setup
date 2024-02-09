@@ -49,3 +49,6 @@ python3 manage.py createsuperuser
 #google i usef https://pylessons.com/django-google-oauth
 pip install django-allauth
 
+
+to login use http://127.0.0.1:8000/login/
+
