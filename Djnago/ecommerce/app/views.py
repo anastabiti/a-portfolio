@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 # create a user
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User,Group
 from django.contrib.auth import authenticate,login,logout
 
 def home(request):
@@ -10,13 +10,17 @@ def create_user(request):
     if(request.method == 'POST'):
             role  =request.POST.get("role")
             if(role == "client"):
+                group = Group.objects.get(name="buyers")
                 user =User.objects.create_user(request.POST.get("username") ,request.POST.get("email"),request.POST.get("password"))
+                user.groups.add(group)
                 user.save()
-                return HttpResponse("client created ")
+                return HttpResponse(user.groups.all())
             if(role == "seller"):
+                group = Group.objects.get(name="sellers")
                 user =User.objects.create_superuser(request.POST.get("username") ,request.POST.get("email"),request.POST.get("password"))
+                user.groups.add(group)
                 user.save()
-                return HttpResponse("seller created ")
+                return HttpResponse(user.groups.all())
             else:
                 return HttpResponse("no such role")
                  
