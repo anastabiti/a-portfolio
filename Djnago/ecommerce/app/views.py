@@ -8,8 +8,18 @@ def home(request):
 
 def create_user(request):
     if(request.method == 'POST'):
-        user =User.objects.create_user(request.POST.get("username") ,request.POST.get("email"),request.POST.get("password"))
-        user.save()
+            role  =request.POST.get("role")
+            if(role == "client"):
+                user =User.objects.create_user(request.POST.get("username") ,request.POST.get("email"),request.POST.get("password"))
+                user.save()
+                return HttpResponse("client created ")
+            if(role == "seller"):
+                user =User.objects.create_superuser(request.POST.get("username") ,request.POST.get("email"),request.POST.get("password"))
+                user.save()
+                return HttpResponse("seller created ")
+            else:
+                return HttpResponse("no such role")
+                 
     return HttpResponse(request.POST)
 def login_(request):
         if(request.method == "POST"):
