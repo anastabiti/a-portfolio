@@ -6,7 +6,11 @@ from django.shortcuts import render, redirect
 
 
 def home(request):
-    return render(request, 'home.html')
+    print(request.user.is_authenticated)
+    if request.user.is_authenticated:
+        return render(request, 'home.html')
+    return redirect('/auth')
+
 
 
 def create_user(request):
@@ -29,6 +33,7 @@ def create_user(request):
                  
     return HttpResponse(request.POST)
 def login_(request):
+        print(request.method , " method")
         if(request.method == "POST"):
             user = authenticate(username=request.POST.get("username"), password=request.POST.get("password"))
             # return None if the auth failed
@@ -38,8 +43,15 @@ def login_(request):
             else:
                 return HttpResponse("NOT LOGGED")
         if(request.method == "DELETE"):
+            print("logout is called !!!+!+!+!+!+!+!++!")
             logout(request)
             return HttpResponse("logout is done")
         if(request.method == "GET"):
             return render(request, 'login.html')
+def logout_(request):
+        print(request.method , " method")
+        if(request.method == "POST"):
+            print("logout is called !!!+!+!+!+!+!+!++!")
+            logout(request)
+            return HttpResponse("logout is done")
 
