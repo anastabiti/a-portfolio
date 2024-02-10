@@ -15,6 +15,7 @@ def home(request):
 
 def create_user(request):
     if(request.method == 'POST'):
+        try:
             role  =request.POST.get("role")
             if(role == "client"):
                 group = Group.objects.get(name="buyers")
@@ -33,6 +34,9 @@ def create_user(request):
 
             else:
                 return HttpResponse("no such role")
+        except:
+            return HttpResponse("An exception occurred", status=400)
+        
     if(request.method == 'GET'):  
         return render(request, 'signup_seller.html')
     
