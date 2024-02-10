@@ -35,6 +35,22 @@ def create_user(request):
                 return HttpResponse("no such role")
     if(request.method == 'GET'):  
         return render(request, 'signup_seller.html')
+    
+
+def create_user_buyer(request):
+    if(request.method == 'POST'):
+            role  =request.POST.get("role")
+            if(role == "client"):
+                group = Group.objects.get(name="buyers")
+                user =User.objects.create_user(request.POST.get("username") ,request.POST.get("email"),request.POST.get("password"))
+                user.groups.add(group)
+                user.save()
+                login(request,user)
+                return redirect('/')
+            else:
+                return HttpResponse("no such role")
+    if(request.method == 'GET'):  
+        return render(request, 'signup_buyer.html')
 
                  
     return HttpResponse(request.POST)
