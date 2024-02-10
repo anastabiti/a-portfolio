@@ -10,6 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
+import environ
+env = environ.Env()
+environ.Env.read_env()
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,13 +41,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     #new
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google'
+    # 'django.contrib.sites',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.google'
 ]
 
 MIDDLEWARE = [
@@ -54,7 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "allauth.account.middleware.AccountMiddleware" #new
+    # "allauth.account.middleware.AccountMiddleware" #new
 ]
 
 ROOT_URLCONF = 'ecommerce.urls'
@@ -91,9 +94,9 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ecommerce',
-        'USER': 'USER',
-        'PASSWORD': 'S3cretEXAMPLE',
+        'NAME': env("DB_NAME"),
+        'USER': env("DB_USER"),
+        'PASSWORD':env("DB_PASSWORD"),
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -144,22 +147,45 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
+
 #Google auth
-SITE_ID = 1
-SOCIALACCOUNT_LOGIN_ON_GET=True
+# SOCIALACCOUNT_LOGIN_ON_GET=True
+# SITE_ID = 1
+# AUTHENTICATION_BACKENDS = ['allauth.account.auth_backends.AuthenticationBackend']
 
-AUTHENTICATION_BACKENDS = ['allauth.account.auth_backends.AuthenticationBackend']
-
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        }
-    }
-}
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#         'SCOPE': [
+#             'profile',
+#             'email',
+#         ],
+#         'AUTH_PARAMS': {
+#             'access_type': 'online',
+#         }
+#     }
+# }
 LOGIN_REDIRECT_URL = '/admin'
-LOGOUT_REDIRECT_URL = '/login'
+LOGOUT_REDIRECT_URL = '/admin'
+
+
+
+
+TEMPLATES = [
+	{
+		# Template backend to be used, For example Jinja
+		'BACKEND': 'django.template.backends.django.DjangoTemplates',
+		# Directories for templates
+		'DIRS': [BASE_DIR / 'templates'],
+		'APP_DIRS': True,
+
+		# options to configure
+		'OPTIONS': {
+			'context_processors': [
+				'django.template.context_processors.debug',
+				'django.template.context_processors.request',
+				'django.contrib.auth.context_processors.auth',
+				'django.contrib.messages.context_processors.messages',
+			],
+		},
+	},
+]

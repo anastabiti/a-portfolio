@@ -52,3 +52,18 @@ pip install django-allauth
 
 to login use http://127.0.0.1:8000/login/
 
+
+
+
+ENV i used this guide  https://alicecampkin.medium.com/how-to-set-up-environment-variables-in-django-f3c4db78c55f
+
+
+# AUTH
+https://docs.djangoproject.com/en/5.0/topics/auth/customizing/
+https://docs.djangoproject.com/en/5.0/topics/auth/default/#how-to-log-a-user-in 
+https://docs.allauth.org/en/latest/
+
+
+
+fix tmeplates
+https://www.youtube.com/watch?v=4rIBcwN3tkI
