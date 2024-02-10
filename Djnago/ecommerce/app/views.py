@@ -21,15 +21,21 @@ def create_user(request):
                 user =User.objects.create_user(request.POST.get("username") ,request.POST.get("email"),request.POST.get("password"))
                 user.groups.add(group)
                 user.save()
-                return HttpResponse(user.groups.all())
+                login(request,user)
+                return redirect('/')
             if(role == "seller"):
                 group = Group.objects.get(name="sellers")
                 user =User.objects.create_user(request.POST.get("username") ,request.POST.get("email"),request.POST.get("password"))
                 user.groups.add(group)
                 user.save()
-                return HttpResponse(user.groups.all())
+                login(request,user)
+                return redirect('/')
+
             else:
                 return HttpResponse("no such role")
+    if(request.method == 'GET'):  
+        return render(request, 'signup_seller.html')
+
                  
     return HttpResponse(request.POST)
 def login_(request):
@@ -41,11 +47,11 @@ def login_(request):
                 login(request,user)
                 return redirect('/')
             else:
-                return HttpResponse("NOT LOGGED")
+                return HttpResponse('Not logged', status=401)
         if(request.method == "DELETE"):
             print("logout is called !!!+!+!+!+!+!+!++!")
             logout(request)
-            return HttpResponse("logout is done")
+            return redirect('/')
         if(request.method == "GET"):
             return render(request, 'login.html')
 def logout_(request):
@@ -53,5 +59,5 @@ def logout_(request):
         if(request.method == "POST"):
             print("logout is called !!!+!+!+!+!+!+!++!")
             logout(request)
-            return HttpResponse("logout is done")
+            return redirect('/')
 
