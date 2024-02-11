@@ -73,3 +73,9 @@ http://127.0.0.1:8000/signup/buyer
 http://127.0.0.1:8000/signup/seller
 http://127.0.0.1:8000/
 http://127.0.0.1:8000/admin/
+
+
+
+migration:
+ ./manage.py makemigrations app
+ python manage.py migrate  

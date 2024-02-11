@@ -1,3 +1,5 @@
+#django access database  from The Django admin site   : NEW 
 from django.contrib import admin
+from app.models import Products
 
-# Register your models here.
+admin.site.register(Products)
