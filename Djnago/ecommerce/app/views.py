@@ -78,15 +78,17 @@ def logout_(request):
             return redirect('/')
 
 def list_product(request):
+    user=  request.user
     if(request.user.is_authenticated):
         if(request.method == "POST"):
-            user=  request.user
             if user.groups.filter(name = "sellers").exists():
                 name  =request.POST.get("name")
                 price  =request.POST.get("price")
                 new_product = Products(name=name, price=price, seller=user)
                 new_product.save()
                 return  HttpResponse("DONE : created")
-        return  HttpResponse("not post request")
-    return HttpResponse('Not logged', status=401)
+        if((request.method == "GET") and (user.groups.filter(name = "sellers").exists())):
+            return render(request, 'list_product.html')
+        
+    return HttpResponse('NOT a seller / Not logged', status=401)
     
