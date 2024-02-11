@@ -101,5 +101,5 @@ def get_all_user(request):
     user=  request.user
     if(user.is_authenticated):
         # users  = User.objects.values_list()
-        users = User.objects.values_list('id', 'username', 'email')  
+        users = User.objects.values('id', 'username', 'email')  
         return JsonResponse({'users':list(users)})
