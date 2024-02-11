@@ -21,8 +21,6 @@ def create_user(request):
         # try:
             role  =request.POST.get("role")
             if(role == "seller"):
-                new_product = Products(name="bbo#", price=324)
-                new_product.save()
                 group = Group.objects.get(name="sellers")
                 user =User.objects.create_user(request.POST.get("username") ,request.POST.get("email"),request.POST.get("password"))
                 user.groups.add(group)
@@ -79,3 +77,16 @@ def logout_(request):
             logout(request)
             return redirect('/')
 
+def list_product(request):
+    if(request.user.is_authenticated):
+        if(request.method == "POST"):
+            user=  request.user
+            if user.groups.filter(name = "sellers").exists():
+                name  =request.POST.get("name")
+                price  =request.POST.get("price")
+                new_product = Products(name=name, price=price, seller=user)
+                new_product.save()
+                return  HttpResponse("DONE : created")
+        return  HttpResponse("not post request")
+    return HttpResponse('Not logged', status=401)
+    

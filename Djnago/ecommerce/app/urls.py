@@ -8,5 +8,6 @@ urlpatterns = [
     path("signup/seller", views.create_user),
     path("signup/buyer", views.create_user_buyer),
     path("auth/logout", views.logout_),
+    path("products/list",views.list_product)
     # path("user", views.create_user),
 ]
