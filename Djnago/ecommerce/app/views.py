@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 # create a user
 from django.contrib.auth.models import User,Group
 from django.contrib.auth import authenticate,login,logout
@@ -91,4 +91,9 @@ def list_product(request):
             return render(request, 'list_product.html')
         
     return HttpResponse('NOT a seller / Not logged', status=401)
-    
+
+def all_products(request):
+    user=  request.user
+    if(user.is_authenticated):
+        products = Products.objects.values_list()
+        return JsonResponse({'products': list(products)})
