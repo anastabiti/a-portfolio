@@ -93,10 +93,16 @@ def list_product(request):
     return HttpResponse('NOT a seller / Not logged', status=401)
 
 def all_products(request):
+    # fruits = Fruit.objects.all()
+    # render(request, 'index.html', {'fruits': fruits})
     user=  request.user
     if(user.is_authenticated):
         products = Products.objects.values()
+        # return render(request, 'list_product.html', {'products': products})
         return JsonResponse({'products': list(products)})
+    
+    
+
 def get_all_user(request):
     user=  request.user
     if(user.is_authenticated):
