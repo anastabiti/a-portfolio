@@ -95,5 +95,11 @@ def list_product(request):
 def all_products(request):
     user=  request.user
     if(user.is_authenticated):
-        products = Products.objects.values_list()
+        products = Products.objects.values()
         return JsonResponse({'products': list(products)})
+def get_all_user(request):
+    user=  request.user
+    if(user.is_authenticated):
+        # users  = User.objects.values_list()
+        users = User.objects.values_list('id', 'username', 'email')  
+        return JsonResponse({'users':list(users)})
