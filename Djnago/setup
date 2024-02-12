@@ -108,3 +108,13 @@ https://docs.imagekit.io/getting-started/quickstart-guides/python/python_app#upl
 
 #Extending the existing User model:
 https://docs.djangoproject.com/en/5.0/topics/auth/customizing/
+
+
+#   extended_user_instance = Extended_User.objects.get(user_id=user.id)
+#             user_data = {
+#                 'id': user.id,
+#                 'username': user.username,
+#                 'email': user.email,
+#                 'image': extended_user_instance.image
+#             }
+#             return JsonResponse({'user': user_data})

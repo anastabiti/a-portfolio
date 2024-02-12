@@ -114,7 +114,6 @@ def get_all_user(request):
         return JsonResponse({'users':list(users)})
 
 
-@sync_to_async
 def uploading(request):
         if(request.user.is_authenticated):
             if(request.method == "POST"):
