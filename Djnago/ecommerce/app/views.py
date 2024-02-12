@@ -1,11 +1,13 @@
+import base64
 from django.http import HttpResponse, JsonResponse
 # create a user
 from django.contrib.auth.models import User,Group
 from django.contrib.auth import authenticate,login,logout
 from django.shortcuts import render, redirect
+from imagekitio import ImageKit
 
-
-
+import environ
+env = environ.Env()
 # My Models 
 from app.models import Products
 def home(request):
@@ -109,3 +111,26 @@ def get_all_user(request):
         # users  = User.objects.values_list()
         users = User.objects.values('id', 'username', 'email')  
         return JsonResponse({'users':list(users)})
+def uploading(request):
+        if(request.method == "POST"):
+            file_ = request.FILES["image"]
+            file_content = file_.read()
+            print(file_content)
+            
+            image_ =ImageKit(
+                private_key=env("private_key"),
+                public_key=env("public_key"),
+                url_endpoint=env("url_endpoint"),
+                )
+            file_content_base64 = base64.b64encode(file_content).decode('utf-8')
+
+            image_.upload(
+            file=file_content_base64,
+            file_name=file_.name,
+            )
+            
+    #  const uploadResponse = await avatarKit.upload({
+    #   file: filedata.buffer,
+    #   fileName: filedata.originalname,
+    # });
+            return HttpResponse("done")

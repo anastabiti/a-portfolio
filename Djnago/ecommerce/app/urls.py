@@ -10,6 +10,8 @@ urlpatterns = [
     path("auth/logout", views.logout_),
     path("products/list",views.list_product),
     path("products",views.all_products),
-    path("users",views.get_all_user)
+    path("users",views.get_all_user),
+    path("upload",views.uploading),
+
     # path("user", views.create_user),
 ]

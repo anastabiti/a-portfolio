@@ -2,3 +2,4 @@ django-admin
 virtualenv
 djnago
 django-environ
+imagekitio

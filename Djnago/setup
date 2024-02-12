@@ -79,3 +79,25 @@ http://127.0.0.1:8000/admin/
 migration:
  ./manage.py makemigrations app
  python manage.py migrate  
+
+Using Django templates:
+
+ https://stackoverflow.com/questions/59317193/what-is-the-best-way-to-build-a-django-webapp-frontend
+
+
+#  def index(request):
+#     fruits = Fruit.objects.all()
+#     render(request, 'index.html', {'fruits': fruits})
+#     index.html
+
+# <ul>
+#     {% for fruit in fruits %}
+#     <li>{{ fruit }}</li>
+#     {% endfor %}
+# </ul>
+
+
+
+
+image uploading https://pypi.org/project/imagekitio/#installation
+pip install imagekitio
