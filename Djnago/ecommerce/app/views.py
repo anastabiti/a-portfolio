@@ -6,10 +6,11 @@ from django.contrib.auth import authenticate,login,logout
 from django.shortcuts import render, redirect
 from imagekitio import ImageKit
 
+from asgiref.sync import sync_to_async
 import environ
 env = environ.Env()
 # My Models 
-from app.models import Products
+from app.models import Products,Extended_User
 def home(request):
     print(request.user.is_authenticated)
     if request.user.is_authenticated:
@@ -111,26 +112,36 @@ def get_all_user(request):
         # users  = User.objects.values_list()
         users = User.objects.values('id', 'username', 'email')  
         return JsonResponse({'users':list(users)})
-def uploading(request):
-        if(request.method == "POST"):
-            file_ = request.FILES["image"]
-            file_content = file_.read()
-            print(file_content)
-            
-            image_ =ImageKit(
-                private_key=env("private_key"),
-                public_key=env("public_key"),
-                url_endpoint=env("url_endpoint"),
-                )
-            file_content_base64 = base64.b64encode(file_content).decode('utf-8')
 
-            image_.upload(
-            file=file_content_base64,
-            file_name=file_.name,
-            )
-            
-    #  const uploadResponse = await avatarKit.upload({
-    #   file: filedata.buffer,
-    #   fileName: filedata.originalname,
-    # });
-            return HttpResponse("done")
+
+@sync_to_async
+def uploading(request):
+        if(request.user.is_authenticated):
+            if(request.method == "POST"):
+                file_ = request.FILES["image"]
+                file_content = file_.read()
+                # print(file_content)
+
+                image_ =ImageKit(
+                    private_key=env("private_key"),
+                    public_key=env("public_key"),
+                    url_endpoint=env("url_endpoint"),
+                    )
+                file_content_base64 = base64.b64encode(file_content).decode('utf-8')
+
+                url = image_.upload(
+                file=file_content_base64,
+                file_name=file_.name,
+                )
+                print(url.url)
+                f = open("result.json", "a")
+                f.write(str(url.response_metadata.raw))
+                f.close()
+                p =Extended_User( request.user.id, image=url.url)
+                # request.user.image = url.url
+                p.save()
+                
+                # print(request.user)
+                # print( request.user.image , " saved data +")
+                return HttpResponse("done")
+        return HttpResponse("Not logged")

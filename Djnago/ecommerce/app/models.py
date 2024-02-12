@@ -9,3 +9,8 @@ class Products(models.Model):
     # CASCADE: When the referenced object is deleted, also delete the objects that have 
     # references to it (when you remove a blog post
     #  for instance, you might want to delete comments as well). SQL equivalent: CASCADE
+
+class Extended_User(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE,primary_key=True,
+)
+    image = models.CharField()

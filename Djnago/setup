@@ -101,3 +101,10 @@ Using Django templates:
 
 image uploading https://pypi.org/project/imagekitio/#installation
 pip install imagekitio
+
+
+https://docs.imagekit.io/getting-started/quickstart-guides/python/python_app#uploading-images-in-python-app
+
+
+#Extending the existing User model:
+https://docs.djangoproject.com/en/5.0/topics/auth/customizing/
