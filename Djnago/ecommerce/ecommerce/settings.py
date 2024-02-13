@@ -35,13 +35,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'app',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app'
     #new
     # 'django.contrib.sites',
     # 'allauth',
@@ -190,3 +190,8 @@ TEMPLATES = [
 		},
 	},
 ]
+
+# Substituting a custom User model¶ https://docs.djangoproject.com/en/5.0/topics/auth/customizing/
+
+
+AUTH_USER_MODEL = "app.MyUser"

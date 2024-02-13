@@ -10,7 +10,7 @@ from asgiref.sync import sync_to_async
 import environ
 env = environ.Env()
 # My Models 
-from app.models import Products,Extended_User
+# from app.models import Products,Extended_User
 def home(request):
     print(request.user.is_authenticated)
     if request.user.is_authenticated:
@@ -131,16 +131,8 @@ def uploading(request):
                 url = image_.upload(
                 file=file_content_base64,
                 file_name=file_.name,
-                )
-                print(url.url)
-                f = open("result.json", "a")
-                f.write(str(url.response_metadata.raw))
-                f.close()
-                p =Extended_User( request.user.id, image=url.url)
-                # request.user.image = url.url
-                p.save()
-                
-                # print(request.user)
-                # print( request.user.image , " saved data +")
+                )                
+                request.user.image = url.url
+                request.user.save()
                 return HttpResponse("done")
         return HttpResponse("Not logged")
