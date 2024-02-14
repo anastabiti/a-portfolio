@@ -194,7 +194,7 @@ def google_auth(request):
     return redirect(f'https://accounts.google.com/o/oauth2/v2/auth?client_id={env("client_id")}&redirect_uri=http://localhost:8000/google/callback&response_type=code&scope=email%20profile')
 
 def google_auth_callback(request):
-    try:
+    # try:
         # redirect()
         code = request.GET.get('code')
         print(code , "  {code}")
@@ -215,15 +215,23 @@ def google_auth_callback(request):
                 headers = {'Authorization': f'Bearer {access_token}'}
                 profile =requests.post("https://www.googleapis.com/oauth2/v3/userinfo", headers=headers)
                 print(profile.json())
-                group = Group.objects.get(name="buyers")
-                user =MyUser.objects.create_user(profile.json()['name'],profile.json()['email'])
-                user.groups.add(group)
-                user.save()
-        return HttpResponse("Google auth callback is  called")    
-    except Exception as e:
-            error_message = str(e) 
-            return HttpResponse(error_message, status=400)
+                user = MyUser.objects.get(email__exact=profile.json()['email'])
+                print(user , " hna")
+                if(user is not None):
+                    login(request,user)
+                    return HttpResponse("Login in is done")
+                else:
+                    group = Group.objects.get(name="buyers")
+                    user =MyUser.objects.create_user(profile.json()['name'],profile.json()['email'])
+                    user.groups.add(group)
+                    user.save()
+                    return redirect("/")
+        return HttpResponse("Google auth callback is  called")
+    # except Exception as e:
+    #         error_message = str(e) 
+    #         return HttpResponse(error_message, status=400)
 
 
 #https://stackoverflow.com/questions/45868120/python-post-request-with-bearer-token
 #https://developers.google.com/identity/protocols/oauth2/web-server#httprest_3
+#https://stackoverflow.com/questions/20010108/checking-if-username-exists-in-django#:~:text=objects.-,filter(username%3Dusername).,more%20indirection%20and%20unneeded%20verbosity.
