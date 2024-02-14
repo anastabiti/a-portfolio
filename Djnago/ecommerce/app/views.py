@@ -100,27 +100,33 @@ def create_user_buyer(request):
                  
     return HttpResponse(request.POST)
 def login_(request):
-        print(request.method , " method")
-        if(request.method == "POST"):
-            user = authenticate(username=request.POST.get("username"), password=request.POST.get("password"))
-            # return None if the auth failed
-            if user is not None:
-                login(request,user)
-                return redirect('/')
-            else:
-                return HttpResponse('Not logged', status=401)
-        if(request.method == "DELETE"):
-            print("logout is called !!!+!+!+!+!+!+!++!")
-            logout(request)
-            return redirect('/')
-        if(request.method == "GET"):
-            return render(request, 'login.html')
+        try:
+            if(request.method == "POST"):
+                email_ = request.POST.get("email")
+                password_ = request.POST.get("password")
+                validate_email(email_)
+                if(email_ and password_ is not None):
+                    user = authenticate(username=email_, password=password_)
+                    # return None if the auth failed
+                    if user is not None:
+                        login(request,user)
+                        return redirect('/')
+                raise Exception('ERROR')
+            if(request.method == "GET"):
+                return render(request, 'login.html')
+        except Exception as e:
+            error_message = str(e) 
+            return HttpResponse(error_message, status=400)        
+
+
 def logout_(request):
         print(request.method , " method")
         if(request.method == "POST"):
             print("logout is called !!!+!+!+!+!+!+!++!")
             logout(request)
             return redirect('/')
+
+
 
 def list_product(request):
     user=  request.user
