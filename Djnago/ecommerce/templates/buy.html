@@ -1,45 +1,49 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Product List</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> </head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
 <body>
 
     <h1>Products</h1>
 
     <ul id="product-list">
-        </ul>
+    </ul>
 
     <script>
-        $(document).ready(function() {
-            $.getJSON('/products/all', function(data) {
-                $.each(data.products, function(index, product) {
+        $(document).ready(function () {
+            $.getJSON('/products/all', function (data) {
+                $.each(data.products, function (index, product) {
                     $('#product-list').append(
                         '<li>' +
-                            '<h2>' + product.name + '</h2>' + 
-                            '<p>$' + product.price + '</p>' +
-                            '<button class="buy-button" data-product-id="' + product.id + '">Buy</button>' + 
+                        '<h2>' + product.name + '</h2>' +
+                        '<p>$' + product.price + '</p>' +
+                        '<button class="buy-button" data-product-id="' + product.id + '">Buy</button>' +
                         '</li>'
                     );
-                    $('#product-list').on('click', '.buy-button', function() { 
-        const productId = $(this).data('productId');
-        console.log(productId , " hola ")
-        // API call to initiate the purchase process
-        $.post('/products/buy', { product_id: productId })
-          .done(function(response) {
-            // Handle successful purchase (e.g., display confirmation, redirect)
-            // alert('Purchase successful!'); 
-          })
-          .fail(function(error) {
-           // Handle purchase errors
-            console.error('Purchase failed:', error);  
-          });
-      });
+                });
+                $('#product-list').on('click', '.buy-button', function () {
+                    const productId = $(this).data('productId');
+                    console.log(productId, " hola ")
+                    // API call to initiate the purchase process
+                    $.post('/products/buy', { product_id: productId })
+                        .done(function (response) {
+                            // Handle successful purchase (e.g., display confirmation, redirect)
+                            // alert('Purchase successful!'); 
+                        })
+                        .fail(function (error) {
+                            // Handle purchase errors
+                            console.error('Purchase failed:', error);
+                        });
                 });
             });
         });
     </script>
 </body>
+
 </html>
 
 <!-- <script>
@@ -63,4 +67,3 @@
       });
     });
   </script> -->
-  

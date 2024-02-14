@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.contrib.auth.models import AbstractUser, Group
 from django.core.validators import EmailValidator
 from django.utils.translation import gettext_lazy as _
@@ -50,3 +51,10 @@ class MyUser(AbstractUser):
     REQUIRED_FIELDS = ['username','first_name','last_name']
     def __str__(self):
         return f"{self.email}"
+    
+
+
+class Cart(models.Model):
+    buyer= models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
+    quantity= models.IntegerField(default=0)
+    date =  models.DateField(datetime.now().date())
