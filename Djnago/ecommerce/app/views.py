@@ -219,7 +219,7 @@ def google_auth_callback(request):
                     user = MyUser.objects.get(email__exact=profile.json()['email'])
                     if(user is not None):
                         login(request,user)
-                        return HttpResponse("Login in is done")
+                        return redirect("/")
                 except:
                     print("NO such user")
                     group = Group.objects.get(name="buyers")
