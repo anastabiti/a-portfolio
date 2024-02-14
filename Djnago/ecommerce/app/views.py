@@ -151,10 +151,21 @@ def all_products(request):
     if(user.is_authenticated):
         products = Products.objects.values()
         # return render(request, 'list_product.html', {'products': products})
+        # return JsonResponse({'products': list(products)})
+        return render(request,'buy.html')
+    return redirect('/')
+def get_all_products(request):
+    user=  request.user
+    if(user.is_authenticated):
+        products = Products.objects.values()
         return JsonResponse({'products': list(products)})
     return redirect('/')
 
-    
+def buy(request):
+    if(request.method == "POST"):
+        print(request.POST.get('product_id'))
+    return HttpResponse("DONE")
+
     
 
 def get_all_user(request):

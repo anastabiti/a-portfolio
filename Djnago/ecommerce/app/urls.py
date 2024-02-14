@@ -14,6 +14,8 @@ urlpatterns = [
     path("upload",views.uploading),
     path("google",views.google_auth),
     path("google/callback",views.google_auth_callback),
+    path("products/all",views.get_all_products),
+    path("products/buy",views.buy),
 
     # path("user", views.create_user),
 ]
