@@ -225,10 +225,11 @@ def google_auth_callback(request):
                     group = Group.objects.get(name="buyers")
                     username__ = profile.json()['name']
                     email__ =profile.json()['email']
-                    password__ = "22222"
-                    print(username__, email__, password__ , " +++++")
-                    new_user =MyUser.objects.create_user(username__,email__,password__)
+                    # password__ = "22222" # c=must be changed
+                    # print(username__, email__, password__ , " +++++")
+                    new_user =MyUser.objects.create_user(username__,email__)
                     new_user.groups.add(group)
+                    new_user.image = profile.json()['picture']
                     new_user.save()
                     login(request,new_user)
                     return redirect("/")
