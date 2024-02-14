@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect
 from imagekitio import ImageKit
 from .models import MyUser
 import environ
+import requests
 env = environ.Env()
 from django.core.validators import validate_email #https://docs.djangoproject.com/en/3.0/ref/forms/validation/
 
@@ -151,6 +152,8 @@ def all_products(request):
         products = Products.objects.values()
         # return render(request, 'list_product.html', {'products': products})
         return JsonResponse({'products': list(products)})
+    return redirect('/')
+
     
     
 
@@ -184,3 +187,43 @@ def uploading(request):
                 request.user.save()
                 return HttpResponse("done")
         return HttpResponse("Not logged")
+
+
+
+def google_auth(request):
+    return redirect(f'https://accounts.google.com/o/oauth2/v2/auth?client_id={env("client_id")}&redirect_uri=http://localhost:8000/google/callback&response_type=code&scope=email%20profile')
+
+def google_auth_callback(request):
+    try:
+        # redirect()
+        code = request.GET.get('code')
+        print(code , "  {code}")
+        data = {
+        'code': code, 
+        'client_id': env("client_id"),
+        'client_secret': env("client_secret"),
+        'redirect_uri': 'http://localhost:8000/google/callback',
+        'grant_type': 'authorization_code'
+    }
+
+        res =requests.post('https://oauth2.googleapis.com/token',data=data)
+        if(res is not None):
+        #     # print(res.json()['access_token'])
+        #     return HttpResponse(res.json()['access_token'])
+            access_token =res.json()['access_token']
+            if(access_token is not None):
+                headers = {'Authorization': f'Bearer {access_token}'}
+                profile =requests.post("https://www.googleapis.com/oauth2/v3/userinfo", headers=headers)
+                print(profile.json())
+                group = Group.objects.get(name="buyers")
+                user =MyUser.objects.create_user(profile.json()['name'],profile.json()['email'])
+                user.groups.add(group)
+                user.save()
+        return HttpResponse("Google auth callback is  called")    
+    except Exception as e:
+            error_message = str(e) 
+            return HttpResponse(error_message, status=400)
+
+
+#https://stackoverflow.com/questions/45868120/python-post-request-with-bearer-token
+#https://developers.google.com/identity/protocols/oauth2/web-server#httprest_3
