@@ -215,16 +215,22 @@ def google_auth_callback(request):
                 headers = {'Authorization': f'Bearer {access_token}'}
                 profile =requests.post("https://www.googleapis.com/oauth2/v3/userinfo", headers=headers)
                 print(profile.json())
-                user = MyUser.objects.get(email__exact=profile.json()['email'])
-                print(user , " hna")
-                if(user is not None):
-                    login(request,user)
-                    return HttpResponse("Login in is done")
-                else:
+                try:
+                    user = MyUser.objects.get(email__exact=profile.json()['email'])
+                    if(user is not None):
+                        login(request,user)
+                        return HttpResponse("Login in is done")
+                except:
+                    print("NO such user")
                     group = Group.objects.get(name="buyers")
-                    user =MyUser.objects.create_user(profile.json()['name'],profile.json()['email'])
-                    user.groups.add(group)
-                    user.save()
+                    username__ = profile.json()['name']
+                    email__ =profile.json()['email']
+                    password__ = "22222"
+                    print(username__, email__, password__ , " +++++")
+                    new_user =MyUser.objects.create_user(username__,email__,password__)
+                    new_user.groups.add(group)
+                    new_user.save()
+                    login(request,new_user)
                     return redirect("/")
         return HttpResponse("Google auth callback is  called")
     # except Exception as e:
@@ -235,3 +241,4 @@ def google_auth_callback(request):
 #https://stackoverflow.com/questions/45868120/python-post-request-with-bearer-token
 #https://developers.google.com/identity/protocols/oauth2/web-server#httprest_3
 #https://stackoverflow.com/questions/20010108/checking-if-username-exists-in-django#:~:text=objects.-,filter(username%3Dusername).,more%20indirection%20and%20unneeded%20verbosity.
+#https://github.com/jaredhanson/passport-google-oauth2/blob/master/lib/strategy.js
