@@ -118,3 +118,16 @@ https://docs.djangoproject.com/en/5.0/topics/auth/customizing/
 #                 'image': extended_user_instance.image
 #             }
 #             return JsonResponse({'user': user_data})
+
+
+STRIP
+#  https://testdriven.io/blog/django-stripe-tutorial/  complicated 
+#https://docs.stripe.com/checkout/quickstart
+ pip install stripe
+
+
+ python -m pip install django-cors-headers
+
+
+ fix cors problem with https://stackoverflow.com/questions/68630229/stripe-checkout-example-running-into-cors-error-from-localhost
+ https://docs.stripe.com/testing

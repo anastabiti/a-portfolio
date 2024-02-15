@@ -9,6 +9,7 @@ from imagekitio import ImageKit
 from .models import MyUser
 import environ
 import requests
+import stripe
 env = environ.Env()
 from django.core.validators import validate_email #https://docs.djangoproject.com/en/3.0/ref/forms/validation/
 
@@ -161,12 +162,7 @@ def get_all_products(request):
         return JsonResponse({'products': list(products)})
     return redirect('/')
 
-def buy(request):
-    if(request.method == "POST"):
-        print(request.POST.get('product_id'))
-    return HttpResponse("DONE")
 
-    
 
 def get_all_user(request):
     user=  request.user
@@ -250,7 +246,37 @@ def google_auth_callback(request):
     #         return HttpResponse(error_message, status=400)
 
 
+
+def buy(request):
+    if(request.method == "POST"):
+        print(request.POST.get('product_id'))
+        stripe.api_key = env("STRIPESECRETKEY")
+        checkout_session = stripe.checkout.Session.create(
+            line_items=[
+                {
+                    # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+                    'price': 'price_1Ok2vyEaIQd7kict0bLsc7kX',
+                    'quantity': 1,
+                },
+            ],
+            mode='payment',
+            success_url='http://localhost:8000/',
+            cancel_url="http://localhost:8000/",
+        )
+        print(checkout_session.url , " URL +++++")
+        data = {'url': checkout_session.url}
+        return JsonResponse(data)
+    return JsonResponse(data)
+
+    
+
+
+
 #https://stackoverflow.com/questions/45868120/python-post-request-with-bearer-token
 #https://developers.google.com/identity/protocols/oauth2/web-server#httprest_3
 #https://stackoverflow.com/questions/20010108/checking-if-username-exists-in-django#:~:text=objects.-,filter(username%3Dusername).,more%20indirection%20and%20unneeded%20verbosity.
 #https://github.com/jaredhanson/passport-google-oauth2/blob/master/lib/strategy.js
+#https://docs.stripe.com/checkout/quickstart?client=html
+#https://docs.stripe.com/testing
+#When testing interactively, use a card number, such as 4242 4242 4242 4242. Enter the card number in the Dashboard or in any payment form.
+# Use a valid future date, such as 12/34.

@@ -25,14 +25,15 @@
                         '</li>'
                     );
                 });
-                $('#product-list').on('click', '.buy-button', function () {
+                $('#product-list').on('click', '.buy-button', async  () => {
                     const productId = $(this).data('productId');
                     console.log(productId, " hola ")
                     // API call to initiate the purchase process
                     $.post('/products/buy', { product_id: productId })
                         .done(function (response) {
-                            // Handle successful purchase (e.g., display confirmation, redirect)
-                            // alert('Purchase successful!'); 
+                            // alert('Purchase successful!');
+                              console.log( response.url, " data is here ")
+                            window.location.href = response.url;
                         })
                         .fail(function (error) {
                             // Handle purchase errors

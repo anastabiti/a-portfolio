@@ -3,3 +3,4 @@ virtualenv
 djnago
 django-environ
 imagekitio
+stripe
