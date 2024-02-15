@@ -260,8 +260,8 @@ def buy(request):
                 },
             ],
             mode='payment',
-            success_url='http://localhost:8000/',
-            cancel_url="http://localhost:8000/",
+            success_url='http://localhost:8000/products/buy/success',
+            cancel_url="http://localhost:8000/products/buy/canceled",
         )
         print(checkout_session.url , " URL +++++")
         data = {'url': checkout_session.url}
@@ -269,7 +269,11 @@ def buy(request):
     return JsonResponse(data)
 
     
-
+def success_(request):
+     return render(request, 'success.html') 
+    
+def canceled_(request):
+     return render(request, 'canceled.html') 
 
 
 #https://stackoverflow.com/questions/45868120/python-post-request-with-bearer-token
