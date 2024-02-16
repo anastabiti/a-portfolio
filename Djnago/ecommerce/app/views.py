@@ -138,6 +138,12 @@ def list_product(request):
                 name  =request.POST.get("name")
                 price  =request.POST.get("price")
                 new_product = Products(name=name, price=price, seller=user)
+                stripe.api_key = env("STRIPESECRETKEY")
+                product = stripe.Product.create(name=name)
+                price_strip = stripe.Price.create(product=product.id,unit_amount=price, currency='usd')
+                print(product.id , " product hna")
+                print(price_strip.id , " price hna")
+                new_product.Price_ID = price_strip.id
                 new_product.save()
                 return  HttpResponse("DONE : created")
         if((request.method == "GET") and (user.groups.filter(name = "sellers").exists())):
@@ -249,13 +255,14 @@ def google_auth_callback(request):
 
 def buy(request):
     if(request.method == "POST"):
-        print(request.POST.get('product_id'))
+        print(request.POST.get('product_id'), " +++++++++++++++++++")
+        print(request.POST.get('Price_ID') , "")
         stripe.api_key = env("STRIPESECRETKEY")
         checkout_session = stripe.checkout.Session.create(
             line_items=[
                 {
                     # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-                    'price': 'price_1Ok2vyEaIQd7kict0bLsc7kX',
+                    'price': 'price_1OkQa8EaIQd7kictOvLsPNd7',
                     'quantity': 1,
                 },
             ],

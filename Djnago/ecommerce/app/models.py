@@ -13,6 +13,7 @@ from django.core.exceptions import ValidationError
 class Products(models.Model):
     name=models.CharField(max_length=50)
     price=models.IntegerField()
+    Price_ID=models.CharField(max_length=1000, default="0")
 # django each user can have multiple products
     seller = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
     # CASCADE: When the referenced object is deleted, also delete the objects that have 
