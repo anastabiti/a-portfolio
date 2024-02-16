@@ -262,7 +262,7 @@ def buy(request):
             line_items=[
                 {
                     # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-                    'price': 'price_1OkQa8EaIQd7kictOvLsPNd7',
+                    'price': request.POST.get('product_id'),
                     'quantity': 1,
                 },
             ],
@@ -273,7 +273,7 @@ def buy(request):
         print(checkout_session.url , " URL +++++")
         data = {'url': checkout_session.url}
         return JsonResponse(data)
-    return JsonResponse(data)
+    return JsonResponse("done")
 
     
 def success_(request):

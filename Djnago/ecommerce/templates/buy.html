@@ -13,7 +13,7 @@
     <ul id="product-list">
     </ul>
 
-    <script>
+    <!-- <script>
         $(document).ready(function () {
             $.getJSON('/products/all', function (data) {
                 $.each(data.products, function (index, product) {
@@ -42,7 +42,40 @@
                 });
             });
         });
+    </script> -->
+    <script>
+        $(document).ready(function () {
+            $.getJSON('/products/all', function (data) {
+                $.each(data.products, function (index, product) {
+                    $('#product-list').append(
+                        '<li>' +
+                        '<h2>' + product.name + '</h2>' +
+                        '<p>$' + product.price + '</p>' +
+                        '<button class="buy-button" data-product-id="' + product.Price_ID + '">Buy</button>' +
+                        '</li>'
+                    );
+                });
+            });
+    
+            $('#product-list').on('click', '.buy-button', async function () {
+                const productId = $(this).data('product-id');
+                console.log(productId, " hola ");
+                
+                // API call to initiate the purchase process
+                $.post('/products/buy', { product_id: productId })
+                    .done(function (response) {
+                        // alert('Purchase successful!');
+                        console.log(response.url, " data is here ");
+                        window.location.href = response.url;
+                    })
+                    .fail(function (error) {
+                        // Handle purchase errors
+                        console.error('Purchase failed:', error);
+                    });
+            });
+        });
     </script>
+    
 </body>
 
 </html>
