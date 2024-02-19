@@ -257,13 +257,14 @@ def buy(request):
     if(request.method == "POST"):
         print(request.POST.get('product_id'), " +++++++++++++++++++")
         print(request.POST.get('Price_ID') , "")
+        quantity_ =request.POST.get('quantity')
         stripe.api_key = env("STRIPESECRETKEY")
         checkout_session = stripe.checkout.Session.create(
             line_items=[
                 {
                     # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
                     'price': request.POST.get('product_id'),
-                    'quantity': 1,
+                    'quantity': quantity_,
                 },
             ],
             mode='payment',
@@ -275,12 +276,28 @@ def buy(request):
         return JsonResponse(data)
     return JsonResponse("done")
 
-    
+
+
+
 def success_(request):
      return render(request, 'success.html') 
-    
+
+
+
+
 def canceled_(request):
      return render(request, 'canceled.html') 
+
+
+
+
+def reverseastring(request):
+    str = "123456789"
+    tmp=""
+    for char_ in str:
+        tmp = char_+ tmp
+    return HttpResponse(tmp)
+
 
 
 #https://stackoverflow.com/questions/45868120/python-post-request-with-bearer-token

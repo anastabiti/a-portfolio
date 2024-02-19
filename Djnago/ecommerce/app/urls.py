@@ -18,6 +18,6 @@ urlpatterns = [
     path("products/buy",views.buy),
     path("products/buy/success",views.success_),
     path("products/buy/canceled",views.canceled_),
-
+    path("test",views.reverseastring),
     # path("user", views.create_user),
 ]

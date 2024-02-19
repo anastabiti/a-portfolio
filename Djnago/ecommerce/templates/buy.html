@@ -62,7 +62,7 @@
                 console.log(productId, " hola ");
                 
                 // API call to initiate the purchase process
-                $.post('/products/buy', { product_id: productId })
+                $.post('/products/buy', { product_id: productId , quantity:5})
                     .done(function (response) {
                         // alert('Purchase successful!');
                         console.log(response.url, " data is here ");
