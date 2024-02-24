@@ -30,6 +30,9 @@ def create_user(request):
         try:
             role  =request.POST.get("role")
             if(role == "seller"):
+                existing_group = Group.objects.filter(name="sellers").first()
+                if not existing_group:
+                    Group.objects.create(name='sellers')
                 group = Group.objects.get(name="sellers")
                 print("group ", group)
                 email = request.POST.get("email")
@@ -59,7 +62,10 @@ def create_user_buyer(request):
         try:
             role  =request.POST.get("role")
             if(role == "client"):
-                group = Group.objects.get(name="buyers")
+                existing_group = Group.objects.filter(name="buyers").first()
+                if not existing_group:
+                    Group.objects.create(name='buyers')
+                group = Group.objects.get(name="sellers")
                 print("group ", group)
                 email = request.POST.get("email")
                 username = request.POST.get('username') 

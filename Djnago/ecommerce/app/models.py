@@ -25,7 +25,14 @@ class Products(models.Model):
 
 # Create your models here. https://servidorandycode.medium.com/django-overwrite-user-model-b91bcbbbefa2
 class MyUser(AbstractUser):
+    # newGroup = Group()
+    # newGroup.name = 'sellers'
+    # newGroup.save()
+    # bnewGroup = Group()
+    # bnewGroup.name = 'buyers'
+    # bnewGroup.save()
     print("Myuser is called !+_+_+_+_+_+_+_+_+_+_++_+_+_+_+_+_+__+_+_+_")
+
     # Some rules adding username
     username_validator = UnicodeUsernameValidator()
     valid_email = EmailValidator()
@@ -59,3 +66,13 @@ class Cart(models.Model):
     buyer= models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
     quantity= models.IntegerField(default=0)
     date =  models.DateField(datetime.now().date())
+
+    # models.py
+
+
+
+# class GroupA(models.Model):
+#     name = models.CharField(max_length=255)
+
+# class GroupB(models.Model):
+#     name = models.CharField(max_length=255)
