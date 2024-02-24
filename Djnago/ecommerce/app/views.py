@@ -241,6 +241,9 @@ def google_auth_callback(request):
                         return redirect("/")
                 except:
                     print("NO such user")
+                    existing_group = Group.objects.filter(name="buyers").first()
+                    if not existing_group:
+                        Group.objects.create(name='buyers')
                     group = Group.objects.get(name="buyers")
                     username__ = profile.json()['name']
                     email__ =profile.json()['email']
