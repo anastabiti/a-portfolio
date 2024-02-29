@@ -1,4 +1,51 @@
-.mylogo
-{
-   width: 200px; 
+.mylogo {
+  width: 200px;
+  position: fixed;
+  top: 20;
+  /* right: 0; */
+  left: 0;
+}
+
+.welcome {
+  font-size: 30px;
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: bolder;
+  font-style: normal;
+  text-align: center;
+  position: absolute;
+  top: 15%;
+  left: 40%;
+}
+
+.welcome span {
+  color: rgb(237, 56, 56);
+}
+
+/* https://www.w3schools.com/css/css3_borders.asp */
+.searchbar {
+  text-align: left;
+  position: absolute;
+  top: 2%;
+  left: 25%;
+  border: 2px solid #ffffff;
+  border-radius: 45px;
+  background: #ffffff;
+  padding: 12px;
+  width: 770px;
+  height: 0px;
+}
+.formsearchbar {
+   text-align: left;
+   position: absolute;
+   top: 2%;
+   left: 23%;
+}
+
+.Sbutton {
+   text-align: right;
+   border: 0px solid #ffffff;
+   position: absolute;
+   top: 2%;
+   left: 67%;
 }
