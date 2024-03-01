@@ -2,25 +2,25 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
-import { Searchbar } from "./components/searchBar";
+import { Searchbar } from "./components/Searchbar.1";
+import { Profilebar } from "./components/Profilebar";
 function App() {
+  const innerWidth = window.innerWidth;
+  const innerHeight = window.innerHeight;
   return (
     <>
-    <Searchbar>
-      sdsd
-    </Searchbar>
-      {/* <form>
-        <input type="text" placeholder="Search..." />
-        <button type="submit">Search</button>
-      </form> */}
-
       <div className="mylogo">
-        <img src="/mylogo.png" width={200}></img>
+        <img src="/mylogo.png" className="mylogo"></img>
       </div>
+
+      <Searchbar></Searchbar>
+
+      <Profilebar></Profilebar>
+
       <div className="welcome">
         Welcome to Shop<span>Easy</span>{" "}
       </div>
     </>
   );
 }
-export default App; 
+export default App;
