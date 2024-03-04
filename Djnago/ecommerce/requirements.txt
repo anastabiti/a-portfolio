@@ -1,6 +1,7 @@
 django-admin
 virtualenv
-djnago
+django
 django-environ
 imagekitio
 stripe
+django-cors-headers
