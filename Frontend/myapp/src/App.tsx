@@ -4,6 +4,7 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 import { Searchbar } from "./components/Searchbar.1";
 import { Profilebar } from "./components/Profilebar";
+import { Cards } from "./components/Cards";
 function App() {
   const innerWidth = window.innerWidth;
   const innerHeight = window.innerHeight;
@@ -16,9 +17,9 @@ function App() {
       <Searchbar></Searchbar>
 
       <Profilebar></Profilebar>
-
+      <Cards></Cards>
       <div className="welcome">
-        Welcome to Shop<span>Easy</span>{" "}
+        Welcome to Shop<span>Easy</span>
       </div>
     </>
   );
