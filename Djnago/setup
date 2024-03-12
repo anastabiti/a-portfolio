@@ -8,6 +8,10 @@ Create your project
 django-admin.py startproject project1
 
 
+and install this brew install postgresql
+
+
+
 fix djnago not insalled 
 https://stackoverflow.com/questions/46210934/importerror-couldnt-import-django
 
@@ -131,3 +135,10 @@ STRIP
 
  fix cors problem with https://stackoverflow.com/questions/68630229/stripe-checkout-example-running-into-cors-error-from-localhost
  https://docs.stripe.com/testing
+
+
+
+///
+
+python3.12 -m venv .venv 
+source .venv/bin/activate

@@ -5,3 +5,5 @@ django-environ
 imagekitio
 stripe
 django-cors-headers
+psycopg
+psycopg2-binary
